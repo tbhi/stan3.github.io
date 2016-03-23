@@ -1,0 +1,10 @@
+---
+layout: post
+title: Ruby's Nokogiri serialize / to_s without whitespace
+---
+
+    <p>I have an app that I wish to verify a signature of the xml fragment.
+Therefore white space is important. Eventually found the way to do this:</p>
+<pre>
+xml_object.at_xpath('//Data').serialize(:save_with =&gt; Nokogiri::XML::Node::SaveOptions::AS_XML)
+</pre>

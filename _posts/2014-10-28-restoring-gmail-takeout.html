@@ -1,0 +1,21 @@
+---
+layout: post
+title: Restoring Gmail Takeout
+---
+<p>Recently I wanted to merge an old gmail account with my main one. The best
+way to achieve this seems to be by taking a Takeout of the Gmail data and
+restoring into the other account. IMAP to IMAP seemed to be more time consuming
+and suffer from not dealing with Gmail labels properly.</p>
+<p>After some while searching for options I can across the following tools</p>
+<ul>
+<li><a href="https://github.com/gaubert/gmvault">https://github.com/gaubert/gmvault</a></li>
+<li><a href="https://github.com/gburca/BaGoMa">https://github.com/gburca/BaGoMa</a></li>
+<li><a href="https://github.com/fxtentacle/gmail-imap-backup">https://github.com/fxtentacle/gmail-imap-backup</a></li>
+<li><a href="https://github.com/jay0lee/got-your-back/">https://github.com/jay0lee/got-your-back/</a></li>
+</ul>
+<p>From these only the last seemed capable of <a href="https://github.com/jay0lee/got-your-back/wiki#action_restorembox">restoring
+the Takeout's mbox file</a>. I extracted the Takeout's all.mbox to
+~/Downloads/gmail and then ran the script.</p>
+<pre>
+python gyb.py --email my@gmail.com --action restore-mbox --local-folder ~/Downloads/gmail
+</pre>

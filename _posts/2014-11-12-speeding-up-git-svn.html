@@ -1,0 +1,17 @@
+---
+layout: post
+title: Speeding up git svn
+---
+
+    <p>For those of use unfortunate enough to use (large) svn repositories I found
+the following has improved things slightly when you get the occassional</p>
+<pre>
+W: Ignoring error from SVN, path probably does not exist: (160013): Filesystem has no item: '/!svn/bc/101' path not found: Additional errors:: File not found: revision 101, path '/services/jet/mami/trunk/branches/PSDR-1139'
+W: Do not be alarmed at the above message git-svn is just searching aggressively for old history.
+This may take a while on large repositories
+</pre>
+<p>message (and it starts going through the repository from revision 1)</p>
+<pre>
+$ git config svn.brokenSymlinkWorkaround false
+</pre>
+<p>Obviously beware if you have symlinks in your svn respository.</p>

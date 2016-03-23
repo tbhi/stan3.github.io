@@ -1,0 +1,12 @@
+---
+layout: post
+title: pasaffe on fedora
+---
+
+    <p>Until a package is done I'm finding the easiest way to run pasaffe is</p>
+<pre>
+tar xf pasaffe-0.43.tar.gz
+cd pasaffe-0.43
+glib-compile-schemas data/glib-2.0/schemas                                                                  
+XDG_DATA_DIRS=$HOME/Downloads/pasaffe-0.43/data:/usr/share $HOME/Downloads/pasaffe-0.43/bin/pasaffe -f ~/password.psafe3
+</pre>

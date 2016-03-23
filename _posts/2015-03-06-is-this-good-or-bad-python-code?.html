@@ -1,0 +1,24 @@
+---
+layout: post
+title: Is this good or bad python code?
+---
+
+    <p>A recursive generator:</p>
+<pre>
+#!/usr/bin/python3
+import string
+import itertools
+
+def letter_count():
+    prefix = ''
+    prefix_generator = letter_count()
+    while True:
+        for l in string.ascii_lowercase:
+            yield prefix + l
+        prefix = next(prefix_generator)
+
+if __name__ == '__main__':
+    for l in letter_count():
+        print(l)
+
+</pre>

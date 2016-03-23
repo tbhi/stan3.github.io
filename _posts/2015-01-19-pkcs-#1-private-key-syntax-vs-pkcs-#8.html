@@ -1,0 +1,12 @@
+---
+layout: post
+title: 'PKCS #1 private key syntax vs PKCS #8'
+---
+
+    <p>Recently I've been looking at a RSA private key embedded in a configuration
+file. Things weren't working as expected so I started looking at the key more
+closely. The string I had was a base64 encoded ASN structure. I came across 2
+formats of these structures <a href="http://tools.ietf.org/html/rfc2313#section-7.2" hreflang="en"></a> and
+<a href="https://tools.ietf.org/html/rfc5208#page-3" hreflang="en"></a>.
+Luckily OpenSSL seemed to have no problem reading either so this wasn't
+actually an issue for me, just something I hadn't appreciated.</p>

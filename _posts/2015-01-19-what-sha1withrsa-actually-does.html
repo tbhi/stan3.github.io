@@ -1,0 +1,22 @@
+---
+layout: post
+title: What SHA1withRSA actually does
+---
+
+    <p>I had some Java code generating a signature like this:</p>
+<pre>
+Signature signature = Signature.getInstance(&quot;SHA1withRSA&quot;);
+signature.initSign(privateKey);
+signature.update(plainText);
+return signature.sign();
+</pre>
+<p>Natively I assumed that the reverse operation would simply be decrypting the
+returned data to reveal a hash. However the result was a 35 byte string rather
+than the 40 I was expecting. Turns out the the signature is also ASN
+encoded:</p>
+<pre>
+irb(main):041:0&gt; key.public_decrypt(signature)
+=&gt; &quot;0!0\t\x06\x05+\x0E\x03\x02\x1A\x05\x00\x04\x14\xF7\x1C\xB4o&amp;\xCFA\xFFN\x14\xE9\xA4V\x89\xC5K\xC7\xB8\fg&quot;
+irb(main):042:0&gt; OpenSSL::ASN1.decode(key.public_decrypt(signature))
+=&gt; #&lt;OpenSSL::ASN1::Sequence:0x007f2c9937f718 @tag=16, @value=[#&lt;OpenSSL::ASN1::Sequence:0x007f2c9937f920 @tag=16, @value=[#&lt;OpenSSL::ASN1::ObjectId:0x007f2c9937f9c0 @tag=6, @value=&quot;SHA1&quot;, @tagging=nil, @tag_class=:UNIVERSAL, @infinite_length=false&gt;, #&lt;OpenSSL::ASN1::Null:0x007f2c9937f948 @tag=5, @value=nil, @tagging=nil, @tag_class=:UNIVERSAL, @infinite_length=false&gt;], @tagging=nil, @tag_class=:UNIVERSAL, @infinite_length=false&gt;, #&lt;OpenSSL::ASN1::OctetString:0x007f2c9937f740 @tag=4, @value=&quot;\xF7\x1C\xB4o&amp;\xCFA\xFFN\x14\xE9\xA4V\x89\xC5K\xC7\xB8\fg&quot;, @tagging=nil, @tag_class=:UNIVERSAL, @infinite_length=false&gt;], @tagging=nil, @tag_class=:UNIVERSAL, @infinite_length=false&gt;
+</pre>

@@ -1,0 +1,18 @@
+---
+layout: post
+title: different github deploy keys
+---
+
+    <p>This litte script set in GIT_SSH switches based on the repository name</p>
+<pre>
+#!/bin/sh
+set -e
+
+echo &quot;$2&quot; &gt;&amp;2
+for SUFFIX in &quot;'&quot; &quot;.git'&quot;; do
+  BASENAME=&quot;$(basename &quot;$2&quot; &quot;$SUFFIX&quot;)&quot;
+  [ -f &quot;$HOME/.ssh/$BASENAME&quot; ] &amp;&amp; break
+done
+KEY=&quot;$HOME/.ssh/id_ecdsa_$BASENAME&quot;
+exec ssh -i &quot;$KEY&quot; &quot;$@&quot;
+</pre>

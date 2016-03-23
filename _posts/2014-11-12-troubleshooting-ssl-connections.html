@@ -1,0 +1,235 @@
+---
+layout: post
+title: Troubleshooting SSL connections
+---
+
+    <p>With openssl 1.0.2 the s_client command supports a --trace when built with
+enable-ssl-trace:</p>
+<pre>
+$ tar xf openssl-1.0.2-beta3.tar.gz
+$ cd openssl-1.0.2-beta3
+$ ./config enable-ssl-trace --prefix=$PWD/prefix --openssldir=$PWD/prefix
+$ make dep
+$ make
+$ apps/openssl s_client -connect yum.dev.bbc.co.uk:443 -cert /home/stan/Downloads/hillt08.pem -CAfile /home/stan/Downloads/ca.pem -debug -state -trace
+WARNING: can't open config file: /home/stan/Downloads/openssl-1.0.2-beta3/prefix/openssl.cnf
+CONNECTED(00000003)
+SSL_connect:before/connect initialization
+write to 0x2387050 [0x23870d0] (361 bytes =&gt; 361 (0x169))
+0000 - 16 03 01 01 64 01 00 01-60 03 03 ef c0 3d 48 78   ....d...`....=Hx
+0010 - fa 79 79 e3 4a 7e 9d 96-86 92 d6 25 3e d8 7b 03   .yy.J~.....%&gt;.{.
+0020 - ee ff fb 7b 0e b4 e3 7f-df 11 83 00 00 c4 c0 30   ...{...........0
+0030 - c0 2c c0 28 c0 24 c0 14-c0 0a 00 a5 00 a3 00 a1   .,.(.$..........
+0040 - 00 9f 00 6b 00 6a 00 69-00 68 00 39 00 38 00 37   ...k.j.i.h.9.8.7
+0050 - 00 36 00 88 00 87 00 86-00 85 c0 32 c0 2e c0 2a   .6.........2...*
+0060 - c0 26 c0 0f c0 05 00 9d-00 3d 00 35 00 84 c0 2f   .&amp;.......=.5.../
+0070 - c0 2b c0 27 c0 23 c0 13-c0 09 00 a4 00 a2 00 a0   .+.'.#..........
+0080 - 00 9e 00 67 00 40 00 3f-00 3e 00 33 00 32 00 31   ...g.@.?.&gt;.3.2.1
+0090 - 00 30 00 9a 00 99 00 98-00 97 00 45 00 44 00 43   .0.........E.D.C
+00a0 - 00 42 c0 31 c0 2d c0 29-c0 25 c0 0e c0 04 00 9c   .B.1.-.).%......
+00b0 - 00 3c 00 2f 00 96 00 41-00 07 c0 11 c0 07 c0 0c   .&lt;./...A........
+00c0 - c0 02 00 05 00 04 c0 12-c0 08 00 16 00 13 00 10   ................
+00d0 - 00 0d c0 0d c0 03 00 0a-00 15 00 12 00 0f 00 0c   ................
+00e0 - 00 09 00 14 00 11 00 0e-00 0b 00 08 00 06 00 03   ................
+00f0 - 00 ff 01 00 00 73 00 0b-00 04 03 00 01 02 00 0a   .....s..........
+0100 - 00 3a 00 38 00 0e 00 0d-00 19 00 1c 00 0b 00 0c   .:.8............
+0110 - 00 1b 00 18 00 09 00 0a-00 1a 00 16 00 17 00 08   ................
+0120 - 00 06 00 07 00 14 00 15-00 04 00 05 00 12 00 13   ................
+0130 - 00 01 00 02 00 03 00 0f-00 10 00 11 00 23 00 00   .............#..
+0140 - 00 0d 00 20 00 1e 06 01-06 02 06 03 05 01 05 02   ... ............
+0150 - 05 03 04 01 04 02 04 03-03 01 03 02 03 03 02 01   ................
+0160 - 02 02 02 03 00 0f 00 01-01                        .........
+Sent Record
+Header:
+  Version = TLS 1.0 (0x301)
+  Content Type = Handshake (22)
+  Length = 356
+    ClientHello, Length=352
+      client_version=0x303 (TLS 1.2)
+      Random:
+        gmt_unix_time=0xEFC03D48
+        random_bytes (len=28): 78FA7979E34A7E9D968692D6253ED87B03EEFFFB7B0EB4E37FDF1183
+      session_id (len=0): 
+      cipher_suites (len=196)
+        {0xC0, 0x30} TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        {0xC0, 0x2C} TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+        {0xC0, 0x28} TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+        {0xC0, 0x24} TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384
+        {0xC0, 0x14} TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+        {0xC0, 0x0A} TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+        {0x00, 0xA5} TLS_DH_DSS_WITH_AES_256_GCM_SHA384
+        {0x00, 0xA3} TLS_DHE_DSS_WITH_AES_256_GCM_SHA384
+        {0x00, 0xA1} TLS_DH_RSA_WITH_AES_256_GCM_SHA384
+        {0x00, 0x9F} TLS_DHE_RSA_WITH_AES_256_GCM_SHA384
+        {0x00, 0x6B} TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+        {0x00, 0x6A} TLS_DHE_DSS_WITH_AES_256_CBC_SHA256
+        {0x00, 0x69} TLS_DH_RSA_WITH_AES_256_CBC_SHA256
+        {0x00, 0x68} TLS_DH_DSS_WITH_AES_256_CBC_SHA256
+        {0x00, 0x39} TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+        {0x00, 0x38} TLS_DHE_DSS_WITH_AES_256_CBC_SHA
+        {0x00, 0x37} TLS_DH_RSA_WITH_AES_256_CBC_SHA
+        {0x00, 0x36} TLS_DH_DSS_WITH_AES_256_CBC_SHA
+        {0x00, 0x88} TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA
+        {0x00, 0x87} TLS_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA
+        {0x00, 0x86} TLS_DH_RSA_WITH_CAMELLIA_256_CBC_SHA
+        {0x00, 0x85} TLS_DH_DSS_WITH_CAMELLIA_256_CBC_SHA
+        {0xC0, 0x32} TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384
+        {0xC0, 0x2E} TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384
+        {0xC0, 0x2A} TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384
+        {0xC0, 0x26} TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384
+        {0xC0, 0x0F} TLS_ECDH_RSA_WITH_AES_256_CBC_SHA
+        {0xC0, 0x05} TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA
+        {0x00, 0x9D} TLS_RSA_WITH_AES_256_GCM_SHA384
+        {0x00, 0x3D} TLS_RSA_WITH_AES_256_CBC_SHA256
+        {0x00, 0x35} TLS_RSA_WITH_AES_256_CBC_SHA
+        {0x00, 0x84} TLS_RSA_WITH_CAMELLIA_256_CBC_SHA
+        {0xC0, 0x2F} TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        {0xC0, 0x2B} TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        {0xC0, 0x27} TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+        {0xC0, 0x23} TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+        {0xC0, 0x13} TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+        {0xC0, 0x09} TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+        {0x00, 0xA4} TLS_DH_DSS_WITH_AES_128_GCM_SHA256
+        {0x00, 0xA2} TLS_DHE_DSS_WITH_AES_128_GCM_SHA256
+        {0x00, 0xA0} TLS_DH_RSA_WITH_AES_128_GCM_SHA256
+        {0x00, 0x9E} TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+        {0x00, 0x67} TLS_DHE_RSA_WITH_AES_128_CBC_SHA256
+        {0x00, 0x40} TLS_DHE_DSS_WITH_AES_128_CBC_SHA256
+        {0x00, 0x3F} TLS_DH_RSA_WITH_AES_128_CBC_SHA256
+        {0x00, 0x3E} TLS_DH_DSS_WITH_AES_128_CBC_SHA256
+        {0x00, 0x33} TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+        {0x00, 0x32} TLS_DHE_DSS_WITH_AES_128_CBC_SHA
+        {0x00, 0x31} TLS_DH_RSA_WITH_AES_128_CBC_SHA
+        {0x00, 0x30} TLS_DH_DSS_WITH_AES_128_CBC_SHA
+        {0x00, 0x9A} TLS_DHE_RSA_WITH_SEED_CBC_SHA
+        {0x00, 0x99} TLS_DHE_DSS_WITH_SEED_CBC_SHA
+        {0x00, 0x98} TLS_DH_RSA_WITH_SEED_CBC_SHA
+        {0x00, 0x97} TLS_DH_DSS_WITH_SEED_CBC_SHA
+        {0x00, 0x45} TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA
+        {0x00, 0x44} TLS_DHE_DSS_WITH_CAMELLIA_128_CBC_SHA
+        {0x00, 0x43} TLS_DH_RSA_WITH_CAMELLIA_128_CBC_SHA
+        {0x00, 0x42} TLS_DH_DSS_WITH_CAMELLIA_128_CBC_SHA
+        {0xC0, 0x31} TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256
+        {0xC0, 0x2D} TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256
+        {0xC0, 0x29} TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256
+        {0xC0, 0x25} TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256
+        {0xC0, 0x0E} TLS_ECDH_RSA_WITH_AES_128_CBC_SHA
+        {0xC0, 0x04} TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA
+        {0x00, 0x9C} TLS_RSA_WITH_AES_128_GCM_SHA256
+        {0x00, 0x3C} TLS_RSA_WITH_AES_128_CBC_SHA256
+        {0x00, 0x2F} TLS_RSA_WITH_AES_128_CBC_SHA
+        {0x00, 0x96} TLS_RSA_WITH_SEED_CBC_SHA
+        {0x00, 0x41} TLS_RSA_WITH_CAMELLIA_128_CBC_SHA
+        {0x00, 0x07} SSL_RSA_WITH_IDEA_CBC_SHA
+        {0xC0, 0x11} TLS_ECDHE_RSA_WITH_RC4_128_SHA
+        {0xC0, 0x07} TLS_ECDHE_ECDSA_WITH_RC4_128_SHA
+        {0xC0, 0x0C} TLS_ECDH_RSA_WITH_RC4_128_SHA
+        {0xC0, 0x02} TLS_ECDH_ECDSA_WITH_RC4_128_SHA
+        {0x00, 0x05} SSL_RSA_WITH_RC4_128_SHA
+        {0x00, 0x04} SSL_RSA_WITH_RC4_128_MD5
+        {0xC0, 0x12} TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+        {0xC0, 0x08} TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA
+        {0x00, 0x16} SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+        {0x00, 0x13} SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA
+        {0x00, 0x10} SSL_DH_RSA_WITH_3DES_EDE_CBC_SHA
+        {0x00, 0x0D} SSL_DH_DSS_WITH_3DES_EDE_CBC_SHA
+        {0xC0, 0x0D} TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA
+        {0xC0, 0x03} TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA
+        {0x00, 0x0A} SSL_RSA_WITH_3DES_EDE_CBC_SHA
+        {0x00, 0x15} SSL_DHE_RSA_WITH_DES_CBC_SHA
+        {0x00, 0x12} SSL_DHE_DSS_WITH_DES_CBC_SHA
+        {0x00, 0x0F} SSL_DH_RSA_WITH_DES_CBC_SHA
+        {0x00, 0x0C} SSL_DH_DSS_WITH_DES_CBC_SHA
+        {0x00, 0x09} SSL_RSA_WITH_DES_CBC_SHA
+        {0x00, 0x14} SSL_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA
+        {0x00, 0x11} SSL_DHE_DSS_EXPORT_WITH_DES40_CBC_SHA
+        {0x00, 0x0E} SSL_DH_RSA_EXPORT_WITH_DES40_CBC_SHA
+        {0x00, 0x0B} SSL_DH_DSS_EXPORT_WITH_DES40_CBC_SHA
+        {0x00, 0x08} SSL_RSA_EXPORT_WITH_DES40_CBC_SHA
+        {0x00, 0x06} SSL_RSA_EXPORT_WITH_RC2_CBC_40_MD5
+        {0x00, 0x03} SSL_RSA_EXPORT_WITH_RC4_40_MD5
+        {0x00, 0xFF} TLS_EMPTY_RENEGOTIATION_INFO_SCSV
+      compression_methods (len=1)
+        No Compression (0x00)
+      extensions, length = 115
+        extension_type=ec_point_formats(11), length=4
+          uncompressed (0)
+          ansiX962_compressed_prime (1)
+          ansiX962_compressed_char2 (2)
+        extension_type=elliptic_curves(10), length=58
+          sect571r1 (B-571) (14)
+          sect571k1 (K-571) (13)
+          secp521r1 (P-521) (25)
+          brainpoolP512r1 (28)
+          sect409k1 (K-409) (11)
+          sect409r1 (B-409) (12)
+          brainpoolP384r1 (27)
+          secp384r1 (P-384) (24)
+          sect283k1 (K-283) (9)
+          sect283r1 (B-283) (10)
+          brainpoolP256r1 (26)
+          secp256k1 (22)
+          secp256r1 (P-256) (23)
+          sect239k1 (8)
+          sect233k1 (K-233) (6)
+          sect233r1 (B-233) (7)
+          secp224k1 (20)
+          secp224r1 (P-224) (21)
+          sect193r1 (4)
+          sect193r2 (5)
+          secp192k1 (18)
+          secp192r1 (P-192) (19)
+          sect163k1 (K-163) (1)
+          sect163r1 (2)
+          sect163r2 (B-163) (3)
+          secp160k1 (15)
+          secp160r1 (16)
+          secp160r2 (17)
+        extension_type=session_ticket(35), length=0
+        extension_type=signature_algorithms(13), length=32
+          sha512+rsa (6+1)
+          sha512+dsa (6+2)
+          sha512+ecdsa (6+3)
+          sha384+rsa (5+1)
+          sha384+dsa (5+2)
+          sha384+ecdsa (5+3)
+          sha256+rsa (4+1)
+          sha256+dsa (4+2)
+          sha256+ecdsa (4+3)
+          sha224+rsa (3+1)
+          sha224+dsa (3+2)
+          sha224+ecdsa (3+3)
+          sha1+rsa (2+1)
+          sha1+dsa (2+2)
+          sha1+ecdsa (2+3)
+        extension_type=heartbeat(15), length=1
+          HeartbeatMode: peer_allowed_to_send
+
+SSL_connect:SSLv2/v3 write client hello A
+read from 0x2387050 [0x238c630] (7 bytes =&gt; 7 (0x7))
+0000 - 15 03 03 00 02 02 28                              ......(
+SSL3 alert read:fatal:handshake failure
+Received Record
+Header:
+  Version = TLS 1.2 (0x303)
+  Content Type = Alert (21)
+  Length = 2
+    Level=fatal(2), description=handshake failure(40)
+
+SSL_connect:error in SSLv2/v3 read server hello A
+140716039956128:error:14077410:SSL routines:SSL23_GET_SERVER_HELLO:sslv3 alert handshake failure:s23_clnt.c:777:
+---
+no peer certificate available
+---
+No client certificate CA names sent
+---
+SSL handshake has read 7 bytes and written 361 bytes
+---
+New, (NONE), Cipher is (NONE)
+Secure Renegotiation IS NOT supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+---
+
+</pre>

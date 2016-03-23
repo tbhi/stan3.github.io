@@ -1,0 +1,23 @@
+---
+layout: post
+title: PhantomJS with Ruby
+---
+
+    <p>I've just been experimenting with a couple of ways of using <a href="http://phantomjs.org/">PhantomJS</a> because of the speed benefits.</p>
+<p>Option 1 is the poltergeist capybara driver, using with the <a href="https://rubygems.org/gems/phantomjs/">phantomjs gem</a></p>
+<pre>
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, :phantomjs =&gt; Phantomjs.path, phantomjs_options: ['--proxy=http://localhost:9889'])
+end
+</pre>
+<p>The next one was a bit trickier to work out:</p>
+<pre>
+Selenium::WebDriver::PhantomJS.path = Phantomjs.path
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new(app, :browser =&gt; :phantomjs)
+end
+Capybara.default_driver = :selenium
+</pre>
+<p>Both work well. I had a problem with javascript alert() and confirm() on
+both, as in verifying what the alert says. There are bugs open for these. There
+is also capybara webkit that I have not tried.</p>

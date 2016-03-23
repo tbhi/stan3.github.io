@@ -1,0 +1,9 @@
+---
+layout: post
+title: Best way to do a dns lookup in bash?
+---
+
+    <p>So far:</p>
+<pre>
+getent hosts bbc.co.uk | sed -n '1s/\([^ ]*\).*/\1/p'
+</pre>
