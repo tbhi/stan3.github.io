@@ -2,3 +2,19 @@
 layout: default
 ---
 {{ content }}
+
+<br/>
+<br/>
+<hr/>
+<div class="comments">
+  <h3>Comments</h3>
+  <form method="POST" action="https://api.staticman.net/v2/entry/stan3/stan3.github.io/master/comments">
+    <input name="options[redirect]" type="hidden" value="{{ site.url }}">
+    <!-- e.g. "2016-01-02-this-is-a-post" -->
+    <input name="options[slug]" type="hidden" value="{{ page.slug }}">
+    <label for="fields[name]">Name:</label><input name="fields[name]" type="text"><br/>
+    <label for="fields[email]">Email:</label><input name="fields[email]" type="text"><br/>
+    <label for="fields[message]">Message:</label><textarea name="fields[message]"></textarea><br/>
+    <button type="submit">Go!</button>
+  </form>
+</div>
