@@ -18,7 +18,7 @@ title: Tristan Hill
 description: >- # this means to ignore newlines until "baseurl:"
   Blog about IT related stuff
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://tristan.me.uk.org" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://tristan.me.uk.eu.org" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
 github_username: stan3
 
