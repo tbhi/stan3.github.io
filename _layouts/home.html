@@ -12,8 +12,10 @@ layout: default
       <div>
          <h3>
             <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+            {% comment %}
             -
             <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+            {% endcomment %}
         </h3>
         {{ post.excerpt }}
       </div>
